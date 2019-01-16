@@ -1,0 +1,85 @@
+<!doctype html>
+<title>Display console output</title>
+<script>
+	/*console.log("Hello World");*/
+
+	var firstNumber = 4;
+	var secondNumber = 3;
+	var total = firstNumber + secondNumber;
+	//Display the total
+	console.log(total);
+
+	//Strings
+	var message = "Hungry hippo";
+	console.log(message);
+
+	var firstWord =  "Hungry";
+	var secondWord = "hippo";
+	var sentence = firstWord +" "+ secondWord;
+	console.log(sentence);
+
+	//Booleans
+	var universeEaten = false;
+	universeEaten = true;
+	console.log(universeEaten);
+
+	firstNumber = 10;
+	console.log(firstNumber + secondNumber);
+
+	//Decisions
+	//if Statewments
+	var animal = "mouse";
+
+	if(animal === "horse") {              //==    Compares value
+		console.log("It's a horse");      //===   Compares value and type
+	} 
+	else if(animal === "cat") {
+		console.log("It's a cat");
+	} 
+	else if(animal === "mouse") {
+		console.log("It's a mouse")
+	} 
+	else {
+		console.log("I don't know what it is");
+	}
+
+	if (firstNumber === 0) {
+		console.log(firstNumber);
+	}
+
+	if (firstNumber === 10) {
+		if (secondNumber === 3) {
+			console.log(firstNumber + secondNumber);
+		}
+	}
+	
+	//Switch
+	switch(animal) {
+		case "horse":
+			console.log ("It's a horse");
+			break;
+		case "mouse":
+			console.log("It's a mouse");
+			break;
+		case "cat":
+			console.log("It's a cat");
+			break;
+			
+		default:
+			console.log("I don't know that one");
+	}
+
+	//Using && and ||
+	var spellIsBroken = true;
+	var witchIsDead = true;
+	if (spellIsBroken === true && witchIsDead === true) {
+		console.log("Game Over");
+	}
+	if (spellIsBroken === true || witchIsDead === true) {
+		console.log("Game Over");
+	}
+
+	if (firstNumber <= 10) {
+		console.log(firstNumber);
+	}
+</script>
