@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Learning Canvas</title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var canvas = $("#myCanvas");
+				var context = canvas.get(0).getContext("2d");  //IMPORTANT for drawing
+
+				context.fillRect(40, 40, 100, 100);     //Filled Rectangle
+				context.strokeRect(100, 100, 100, 100); //Outlined Rectangle
+
+				context.beginPath();      //Start the path
+				context.moveTo(200, 200); //Sets the path origin
+				context.lineTo(400, 400); //Sets the destination
+				context.closePath();      //Close the path
+				context.stroke();         //Outline the path
+
+			});
+		</script>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="500" height="500"></canvas>
+	</body>
+</html>
