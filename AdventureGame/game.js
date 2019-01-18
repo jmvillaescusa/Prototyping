@@ -178,7 +178,7 @@ $(document).ready(function () {
 		}
 		else {
 			//Message if the player tries to take at a different location
-			gameMessage = "<br>You can't do that";
+			gameMessage = "You can't do that";
 		}
 	}
 
