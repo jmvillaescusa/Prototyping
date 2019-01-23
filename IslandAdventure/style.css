@@ -19,10 +19,17 @@
 }
 
 #game {
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	margin: 1em 1em 1em 1em;
 	width: 404px;
 	height: 570px;
 	background-color: white;
 	border: 1px dashed black;
+	float: left;
+}
+
+#rules {
+	float: right;
 }
 
 @font-face {

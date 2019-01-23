@@ -51,6 +51,7 @@ $(document).ready(function () {
 				monsterRow = row; //= 1
 				monsterColumn = column; //= 2
 			}
+
 		}
 	}
 
@@ -59,18 +60,24 @@ $(document).ready(function () {
 	var DOWN = 40;
 	var RIGHT = 39;
 	var LEFT = 37;
+	var WW = 87;
+	var SS = 83;
+	var DD = 68;
+	var AA = 65;
+
 
 	//Game Variables
 	var food = 10;
 	var gold = 10;
 	var experience = 0;
-	var gameMessage = "Use arrow keys to find your way home";
+	var gameMessage = "Navigate the ship to find your way home";
 
 	render();
 
 	function keydownHandler(event) {
 		switch (event.keyCode) {
 			case UP:
+			case WW:
 				if (shipRow > 0) {
 					gameObjects[shipRow][shipColumn] = 0;    //Clear the ship's current cell
 					shipRow--;                               //Subtract 1 from the ship's row (move the ship up)
@@ -79,6 +86,7 @@ $(document).ready(function () {
 				break;
 
 			case DOWN:
+			case SS:
 				if (shipRow < ROWS - 1) {
 					gameObjects[shipRow][shipColumn] = 0;
 					shipRow++;
@@ -87,14 +95,16 @@ $(document).ready(function () {
 				break;
 
 			case LEFT:
+			case AA:
 				if (shipColumn > 0) {
 					gameObjects[shipRow][shipColumn] = 0;
-					shipRColumn--;
+					shipColumn--;
 					gameObjects[shipRow][shipColumn] = SHIP;
 				}
 				break;
 
 			case RIGHT:
+			case DD:
 				if (shipColumn < COLUMNS - 1) {
 					gameObjects[shipRow][shipColumn] = 0;
 					shipColumn++;
@@ -190,7 +200,7 @@ $(document).ready(function () {
 		//Which of thost directions will the monster choost to move in?
 		//If a valid direction was found, Randomly choose one of the possible directions,
 		//and assign it to the direction variable
-		if (validDirections, length !== 0) {
+		if (validDirections.length !== 0) {
 			var randomNumber = Math.floor(Math.random() * validDirections.length);
 			direction = validDirections[randomNumber];
 		}
@@ -234,7 +244,7 @@ $(document).ready(function () {
 			gold -= cost
 			experience += 2;
 
-			gameMessage = "You buy " + islandFood + " coconuts" + " for " + cost + "gold pieces.";
+			gameMessage = "You buy " + islandFood + " coconuts" + " for " + cost + " gold pieces.";
 		}
 		else {
 			//Tell the player if they don't have enough gold
@@ -259,7 +269,7 @@ $(document).ready(function () {
 			experience += 1;
 
 			//Update the game message
-			gameMessage = "You fight and LOSE " + stolenGold + " gold pieces." + " Ship strength: " + shipStrength + " Pirates's strength: " + pirateStrength;
+			gameMessage = "You fight and LOSE " + stolenGold + " gold pieces." + " <br>Ship strength: " + shipStrength + " Pirates's strength: " + pirateStrength;
 		}
 		else {
 			//You win the pirate's gold
@@ -270,13 +280,98 @@ $(document).ready(function () {
 			experience += 2;
 
 			//Update the game message
-			gameMessage = "You fight and WIN " + pirateGold + " gold pieces." + " Ship's strength: " + shipStrength + " Pirate's strength: " + pirateStrength;
+			gameMessage = "You fight and WIN " + pirateGold + " gold pieces." + " <br>Ship's strength: " + shipStrength + " Pirate's strength: " + pirateStrength;
 		}
 	}
 
 	function endGame() {
+		if (map[shipRow][shipColumn] === HOME) {
+			//Add the score
+			var score = food + gold + experience;
+			 
+			//Display the game message
+			gameMessage = "You made it home ALIVE! " + "<br>Final Score: " + score;
+		}
+		else if (gameObjects[shipRow][shipColumn] === MONSTER) {
+			gameMessage = "Your ship has been swallowed by a sea monster!<br>";
+			gameMessage += " Game Over!";
+		}
+		else {
+			//Display the game message
+			if (gold <= 0) {
+				gameMessage = " You've run out of gold!<br> The pirates pillage your ship!";
+			}
+			else {
+				gameMessage = " You've run out of food!<br> Your crew throws you out of the ship!";
+			}
+			gameMessage += " ";
+		}
+		
 
+		window.removeEventListener("keydown", keydownHandler, false);
 	}
 
-	function render() { }
+	function render() {
+		//Clear the stage of img cells from the previous turn
+		if (stage.children().length > 0) {
+			for (var i = 0; i < ROWS * COLUMNS; i++) {
+				stage.children().remove();
+			}
+		}
+
+		//Render the gameby looping through the map arrays
+		for (var row = 0; row < ROWS; row++) {
+			for (var column = 0; column < COLUMNS; column++) {
+				//Create a img tag called cell
+				var cell = $("<img/>");
+
+				//Set it's CSS class to "cell"
+				cell.attr("class", "cell");
+
+				//Add the img tag to the <div id="stage"> tag
+				stage.append(cell);
+
+				//Find the correct image for this map cell
+				switch (map[row][column]) {
+					case WATER:
+						cell.attr("src", "images/water.png");
+						break;
+
+					case ISLAND:
+						cell.attr("src", "images/island.png");
+						break;
+
+					case PIRATE:
+						cell.attr("src", "images/pirate.png");
+						break;
+
+					case HOME:
+						cell.attr("src", "images/home.png");
+						break;
+				}
+
+				//Add the ship and monster from the gameObjects array
+				switch (gameObjects[row][column]) {
+					case SHIP:
+						cell.attr("src", "images/ship.png");
+						break;
+
+					case MONSTER:
+						cell.attr("src", "images/monster.png");
+						break;
+				}
+
+				//Position the cell
+
+				cell.css("top", (row * SIZE) + "px");
+				cell.css("left", (column * SIZE) + "px");
+			}
+		}
+
+		//Display the game message
+		output.html(gameMessage);
+
+		//Display the gold, food, experience
+		output.append("<br>Gold: " + gold + ", Food: " + food + ", Experience: " + experience);
+	}
 });
