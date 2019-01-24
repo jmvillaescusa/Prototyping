@@ -16,6 +16,7 @@ $(document).ready(function () {
 
 			if (this.currentFrame < this.numberOfFrames) {
 				this.currentFrame++;
+				console.log(monster.currentFrame);
 			}
 		}
 	};
