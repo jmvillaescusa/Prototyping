@@ -2,65 +2,68 @@
 <html>
 	<head>
 		<title>Excersize</title>
+		<script type="text/javascript" src="jquery-3.3.1.min.js" ></script>
 		<script type="text/javascript">
-			/*//Using Variables
-			var j = 1;
-			var k = 1;
-			var l = 1;
-
-			for (var i = 1; i < 101; i++) {
-				if (i == 15 * l) {
-					console.log("POW WOW");
-					l++;
-					k++;
-					j++;
-				}
-				else if (i == 5 * k) {
-					console.log("POW");
-					k++;
-				}
-				else if (i == 3 * j) {
-					console.log("WOW");
-					j++;
-				}
-				else {
-					console.log(i);
-				}
-			} */
-
-			/*//Using Modulo
-			for (var i = 1; i < 101; i++) {
-				if (i % 15 == 0) {
-					console.log("POW WOW");
-				}
-				else if (i % 5 == 0) {
-					console.log("POW");
-				}
-				else if (i % 3 == 0) {
-					console.log("WOW");
-				}
-				else {
-					console.log(i);
-				}
-			} */
-
-			//Using Switch
-			for (var i = 1; i <= 100; i++) {
-				switch (true) {
-					case i % 15 == 0:
+			$(document).ready(function () {
+				/*//Display 1 - 100
+				for (var i = 1; i < 101; i++) {
+					if (i % 15 == 0) {
 						console.log("POW WOW");
-						break;
-					case i % 5 == 0:
+					}
+					else if (i % 5 == 0) {
 						console.log("POW");
-						break;
-					case i % 3 == 0:
+					}
+					else if (i % 3 == 0) {
 						console.log("WOW");
-						break;
-					default:
+					}
+					else {
 						console.log(i);
+					}
+				}*/
+
+				//Display Names on a list
+				var input = $("#input");
+				var output = $("#output");
+				var button = $("#enter");
+				var list = $("#list");
+
+				var listOfNames = [];
+
+				button.click(function (e) {
+					clickHandler();
+				});
+
+				function clickHandler() {
+					name = input.val();
+					if (name === "") {
+						null;
+					}
+					else {
+						listOfNames.push(name);
+					}
+					input.replaceWith(input.val(""));
+					console.log(name);
 				}
-			}
+
+				list.click(function (e) {
+					click();
+				});
+
+				function click() {
+					var string = "";
+					for (var i = 0; i < listOfNames.length; i++) {
+						string += listOfNames[i] + "<br>";
+					}
+					output.html(string);
+				}
+			});
 		</script>
 	</head>
-	<body></body>
+	<body>
+		<input id="input" type="text" placeholder="Please enter your name:" />
+		<button id="enter">Enter</button>
+		<button id="list">Show List</button>
+		<h3>List Of Names</h3>
+		<p id="output"></p>
+	</body>
 </html>
